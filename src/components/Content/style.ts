@@ -4,7 +4,7 @@ export const Container = styled.main`
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 6px 0 rgba(69, 91, 99, 0.08);
-  margin: 40px auto;
+  margin: 40px auto auto;
   padding: 35px;
   max-width: 1320px;
 `;
@@ -53,7 +53,7 @@ export const Char = styled.div`
   align-items: center;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   img {
     border-radius: 50%;
@@ -83,12 +83,11 @@ export const Char = styled.div`
   p {
     font-family: Roboto, sans-serif;
     font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
     line-height: 1.64;
-    letter-spacing: normal;
     text-align: center;
+    height: 44px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #4a4a4a;
   }
 `;

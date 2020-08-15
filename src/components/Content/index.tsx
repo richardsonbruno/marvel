@@ -1,32 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
 
 import { Container, Title, Form, Main, Char } from './style';
 
-const Content = () => (
-  <Container>
-    <Title>Character</Title>
+const ts: number = 1597459267;
+const hash: string = 'ee6f4caddd199115c85ec528fc65bbc4';
+const apikey: string = '37331678db04339a51ff40e99c98818f';
 
-    <Form>
-      <input type="text" placeholder="Characters" />
+interface CharacterModel {
+  id: number;
+  name: string;
+  description: string;
+  thumbnail: {
+    extension: string;
+    path: string;
+  };
+}
 
-      <div>
-        <select>
-          <option value="a-z">A-Z</option>
-        </select>
-      </div>
-    </Form>
+const Content: React.FC = () => {
+  const [characters, setCharacters] = useState<CharacterModel[]>([]);
 
-    <Main>
-      <Char>
-        <img
-          src="https://pbs.twimg.com/profile_images/1094413755637735425/wnAwaeXh_400x400.jpg"
-          alt="Miranha"
-        />
-        <span>Peter Paker</span>
-        <p>Descrição do Personagem Lorem ipsum dolor sit amet, consectetur</p>
-      </Char>
-    </Main>
-  </Container>
-);
+  useEffect(() => {
+    async function getCharacter() {
+      const response = await api.get('/characters', {
+        params: {
+          apikey,
+          ts,
+          hash,
+          limit: 12,
+        },
+      });
+
+      const { results } = response.data.data;
+
+      console.log(results);
+
+      setCharacters(results);
+    }
+
+    getCharacter();
+  }, [characters]);
+
+  return (
+    <Container>
+      <Title>Character</Title>
+
+      <Form>
+        <input type="text" placeholder="Characters" />
+
+        <div>
+          <select>
+            <option value="a-z">A-Z</option>
+          </select>
+        </div>
+      </Form>
+
+      <Main>
+        {characters.map(char => (
+          <Char key={char.id}>
+            <img
+              src={`${char.thumbnail.path}.${char.thumbnail.extension}`}
+              alt={char.name}
+            />
+            <span>{char.name}</span>
+            <p>{char.description}</p>
+          </Char>
+        ))}
+      </Main>
+    </Container>
+  );
+};
 
 export default Content;

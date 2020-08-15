@@ -61,4 +61,14 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  body, #root {
+    height: 100vh
+  }
+
+  #root {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+  }
 `;
