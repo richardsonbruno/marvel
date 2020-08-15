@@ -4,7 +4,7 @@ import logoMarvel from '../../assets/marvel.svg';
 
 import { Head, Logo } from './style';
 
-const Header = () => (
+const Header: React.FC = () => (
   <Head>
     <Logo src={logoMarvel} alt="Marvel" />
   </Head>

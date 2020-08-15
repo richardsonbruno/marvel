@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container, Content } from './style';
 
-const Footer = () => (
+const Footer: React.FC = () => (
   <Container>
     <Content>
       <span>
