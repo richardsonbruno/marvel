@@ -18,10 +18,22 @@ interface CharacterModel {
 }
 
 const Content: React.FC = () => {
-  const [characters, setCharacters] = useState<CharacterModel[]>([]);
+  const [characters, setCharacters] = useState<CharacterModel[]>(() => {
+    const storageMarvel = localStorage.getItem('@Marvel:characters');
+
+    if (storageMarvel) {
+      return JSON.parse(storageMarvel);
+    } else {
+      return [];
+    }
+  });
 
   useEffect(() => {
-    async function getCharacter() {
+    (async () => {
+      if (characters.length !== 0) {
+        return;
+      }
+
       const response = await api.get('/characters', {
         params: {
           apikey,
@@ -33,13 +45,10 @@ const Content: React.FC = () => {
 
       const { results } = response.data.data;
 
-      console.log(results);
-
+      localStorage.setItem('@Marvel:characters', JSON.stringify(results));
       setCharacters(results);
-    }
-
-    getCharacter();
-  }, [characters]);
+    })();
+  }, []);
 
   return (
     <Container>
