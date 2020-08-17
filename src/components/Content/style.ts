@@ -62,6 +62,15 @@ export const Form = styled.form`
       pointer-events: none;
     }
   }
+
+  @media (max-width: 380px) {
+    flex-flow: column nowrap;
+
+    div {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+  }
 `;
 
 export const Main = styled.section`
@@ -70,6 +79,22 @@ export const Main = styled.section`
   display: grid;
   grid-template-columns: 290px 290px 290px 290px;
   grid-gap: 30px;
+
+  @media (max-width: 1340px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 490px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Char = styled.div`
