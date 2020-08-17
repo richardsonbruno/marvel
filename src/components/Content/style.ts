@@ -31,7 +31,28 @@ export const Form = styled.form`
   }
 
   div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 40px;
+
+    select {
+      width: 60px;
+      height: 30px;
+      border: none;
+      margin-left: 10px;
+      option {
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+    }
+
+    .up {
+      background: #fff;
+      position: relative;
+      margin-left: -24px;
+      pointer-events: none;
+    }
   }
 `;
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FiFilter, FiChevronUp } from 'react-icons/fi';
 import api from '../../services/api';
 
 import { Container, Title, Form, Main, Char } from './style';
@@ -18,6 +19,9 @@ interface CharacterModel {
 }
 
 const Content: React.FC = () => {
+  const [select, setSelect] = useState(() => {
+    return localStorage.getItem('@Marvel:select');
+  });
   const [characters, setCharacters] = useState<CharacterModel[]>(() => {
     const storageMarvel = localStorage.getItem('@Marvel:characters');
 
@@ -30,25 +34,28 @@ const Content: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      if (characters.length !== 0) {
-        return;
-      }
-
       const response = await api.get('/characters', {
         params: {
           apikey,
           ts,
           hash,
           limit: 12,
+          orderBy: select,
         },
       });
 
       const { results } = response.data.data;
 
-      localStorage.setItem('@Marvel:characters', JSON.stringify(results));
       setCharacters(results);
+
+      localStorage.setItem('@Marvel:characters', JSON.stringify(results));
     })();
-  }, []);
+  }, [select]);
+
+  function handleCharactersOrder(event: any) {
+    setSelect(event.target.value);
+    localStorage.setItem('@Marvel:select', event.target.value);
+  }
 
   return (
     <Container>
@@ -58,9 +65,12 @@ const Content: React.FC = () => {
         <input type="text" placeholder="Characters" />
 
         <div>
-          <select>
-            <option value="a-z">A-Z</option>
+          <FiFilter size={24} color="#ed1d24" />
+          <select onChange={handleCharactersOrder}>
+            <option value="name">A-Z</option>
+            <option value="-name">Z-A</option>
           </select>
+          <FiChevronUp size={24} className="up" color="#c2c5c7" />
         </div>
       </Form>
 
@@ -68,7 +78,7 @@ const Content: React.FC = () => {
         {characters.map(char => (
           <Char key={char.id}>
             <img
-              src={`${char.thumbnail.path}.${char.thumbnail.extension}`}
+              src={`${char.thumbnail.path}/standard_medium.${char.thumbnail.extension}`}
               alt={char.name}
             />
             <span>{char.name}</span>
