@@ -18,6 +18,7 @@ export const Title = styled.h1`
 export const Form = styled.form`
   display: flex;
   align-items: center;
+  position: relative;
 
   input {
     border: 0;
@@ -28,6 +29,13 @@ export const Form = styled.form`
     border-bottom: 3px #9b9b9b solid;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+  }
+
+  .close {
+    position: absolute;
+    left: 340px;
+    z-index: 99;
+    cursor: pointer;
   }
 
   div {
